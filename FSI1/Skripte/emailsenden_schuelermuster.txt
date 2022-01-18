@@ -1,0 +1,59 @@
+#! /bin/bash
+echo "Bedenke, dass die Datei \"~/.muttrc\" die"
+echo "Zeile \"set edit_headers=yes\" enthalten muss!"
+echo -e "Empfänger: \c"
+read Empfaenger
+echo -e "Betreff: \c"
+read Betreff
+echo -e  "Textnachricht: \c"
+read Nachricht1
+echo "$Nachricht1" > /tmp/Nachricht$$
+echo "Wenn ein Dateianhang mit versandt werden soll, dann"
+echo -e "gib den Dateipfad des Anhangs an oder ein # (kein Anhang): \c"
+read Dataipfad
+## utf8-Codierte email mit Anhang
+if  [ "#" != "$Dateipfad" &&  -f "$Dateipfad" ]
+then 
+   datei=`echo "$Dateipfad" |  sed "s/[[\/]*[.a-Z]*\/]*//g"` 
+   (cat /tmp/Nachricht$$; uuencode $Dateipfad $datei) | mail -a `echo -e "Charset: UTF-8From: Rudi Unbekannt <unbekannt@web.de>"` -s "$Betreff"  $Empfaenger
+else 
+## cat /tmp/Nachricht$$ | mail -a `echo -e "Charset: UTF-8\nFrom: Rudi Unbekannt <unbekannt@web.de>\n"` -s "$Betreff"  $Empfaenger
+# oder besser:
+
+#echo "my_hdr Reply-to:Unbekannt@web.de" > /tmp/tmp_$$
+echo "set from=\"machine-account user <user@mail-Domain.de>\"" > /tmp/tmp_$$
+echo "set envelope_from=\"yes\"" >> /tmp/tmp_$$ 
+echo "set charset=\"utf-8\" " >> /tmp/tmp_$$
+echo "set config_charset=\"utf-8\"" >> /tmp/tmp_$$
+echo "set file_charset=\"iso-8859-15:utf-8\"" >> /tmp/tmp_$$
+echo "set send_charset=\"iso-8859-15:utf-8\"" >> /tmp/tmp_$$
+
+#  Ccc = -c
+#  bcc = -b
+
+#echo "set charset=\"UTF-8\"" >> /tmp/tmp_$$
+#echo "set content-transfer-encoding=\"8bit\"" >> /tmp/tmp_$$
+#echo "set content-type=\"text/html\"" >> /tmp/tmp_$$
+#### ; mutt -s "Elvis is dead" receiver@somewherelse.com
+# cat /tmp/Nachricht$$ | mutt  -F /tmp/tmp_$$  -s "$Betreff" $Empfaenger -c unbekannt@googlemail.com
+cat /tmp/Nachricht$$ | mutt  -F /tmp/tmp_$$  -s "$Betreff" "$Empfaenger" 
+rm /tmp/tmp_$$
+rm  /tmp/Nachricht$$
+fi
+
+#  set edit_headers = yes
+#  set realname="My RealName"
+#  set use_from=yes
+#  set envelope_from ="yes"
+#  set reverse_name  
+#  set from=default@example.COM
+#  alternates "alt1@example.COM|alt2@example.NET"
+#  my_hdr Reply-to:user@domain
+
+
+#set assumed_charset="utf-8:iso-8859-1:us-ascii"
+#set charset="utf-8"
+#set config_charset="utf-8"
+#set file_charset="iso-8859-1:utf-8"
+#set send_charset="us-ascii:iso-8859-1:utf-8"
+# set ascii_chars

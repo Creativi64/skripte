@@ -1,0 +1,50 @@
+#!/bin/bash
+if [ $# -lt 2 ]; then
+    echo "###########################################################"
+    echo " Dieses Skript benötigt mindestens zwei Übergabeparameter! "
+    echo " Der Aufruf sollte wie folgt erfolgen:"
+    echo "              $0 Suchpfad  \"Suchausdruck1\" \"[optional Suchausdruck2]\" "
+    echo " Wiederholen Sie den Suchaufruf in der dargestellten Form! "
+    echo "###########################################################"
+    exit 1
+fi
+mkfifo=/tmp/inputpipe01
+ 
+find $1 -name "*odt" 2> /tmp/inputpipe01 &
+find $1 -name "*ods" 2> /tmp/inputipe01 &
+find $1 -name "*odt.pdf" 2> /tmp/inputfile01 &
+
+if [[ $# == 3 ]]
+then 
+   echo "zwei Parameter"
+   suchbegriff1="$2"
+   suchbegriff2="$3"
+
+   echo "suche $suchbegriff1 $suchbegriff2"
+    while read zeile
+      do
+      if ( unzip -ca "$zeile" content1.xml 2> /dev/null | grep -qli "${suchbegriff1}" )  && \
+       ( unzip -ca "$zeile" content2.xml 2> /dev/null  | grep -qli  "${suchbegriff2}"  )
+      then
+           echo "Suchbegriffe gefunden in  $zeile"
+           # else
+            #   echo "nicht gefunden"
+      fi  
+   done  < /tmp/inputpipe01
+else 
+   echo "ein Parameter"
+   suchbegriff1="$2" 
+   echo "suche ${suchbegriff1}"
+   while read zeile
+      do
+      unzip -ca "${zeile}" content.xml 2> /dev/null | grep -qli "${suchbegriff1}" 2> /dev/null
+         if [[ "$?"  == "0" ]]
+         then 
+         
+            echo "Suchbegriff gefunden in  ${zeile}"
+         fi
+         
+   done  < /tmp/inputpipe01
+fi   
+rm /tmp/inputpipe01
+

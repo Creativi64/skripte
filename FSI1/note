@@ -1,0 +1,15 @@
+//Befehlen Für NetzwerkFreigben
+
+//Freigeben
+Net share Freigabe69=C:\Freigabe69 /UNLIMITED /GRANT:JEDER,full
+
+//setAcl
+setacl -on "\\172.16.1.190\Freigabe69"  -ot  shr   -actn  ace  -ace  "n:jeder;p:full"
+
+// Besitz übernehmen
+TAKEOWN /S 172.16.1.190 /U bs-intra.de\kreuzerphilipp /F c:\Freigabe69 /R /D Y
+TAKEOWN /S 172.16.1.190 /U bs-intra.de\kreuzerphilipp /F c:\Freigabe69
+
+TAKEOWN /S 172.16.1.190 /U bs-intra\kreuzerphilipp /F c:\Freigabe69
+
+
