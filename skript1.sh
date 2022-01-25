@@ -1,15 +1,16 @@
 #!/bin/bash
-Adressena=()
-# assoziatives Array oder gehashtes Array
+Adressena=() # assoziatives Array oder gehashtes Array
 declare -a adresseni # indiziertes Array oder Array mit nummerischen Index
+
 if [ $# -lt 1 ] || [ ! -f $1 ]; then
     Skript=$(echo "$0" | sed "s/.*\///g")
-    echo "###### Achtung #########“
-echo " Das Skript: $Skript muss "
-echo " mit einer Adressliste.csv aufgerufen werden!"
-ech######################"
+    echo "###### Achtung #########"
+    echo " Das Skript: $Skript muss "
+    echo " mit einer Adressliste.csv aufgerufen werden!"
+    echo "######################"
     exit 1
 fi
+
 #cat "$1" | ( mapfile; echo "${MAPFILE[@]}")
 mapfile -t <$1
 # printf "%s\n" "${MAPFILE[@]}"
