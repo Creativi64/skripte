@@ -1,11 +1,17 @@
 #!/bin/bash
 
-datei="./namen.csv" 
+datei="./namen.csv"
 
-printf "Line 1\n Line2\n Line3\n" | ( mapfile; echo "${MAPFILE[@]}" )
+printf "Line 1\n Line2\n Line3\n" | (
+    mapfile
+    echo "${MAPFILE[@]}"
+)
 echo "-1----------"
 
-printf "Line 1\n Line2\n Line3\n" | ( mapfile -t; echo "${MAPFILE[@]}" )
+printf "Line 1\n Line2\n Line3\n" | (
+    mapfile -t
+    echo "${MAPFILE[@]}"
+)
 
 echo "-2-----------"
 mapfile -t < <(printf "Line 1\nLine 2\nLine 3")
@@ -17,8 +23,8 @@ printf "%s\n" "${MAPFILE[0]}"
 printf "%s\n" "${MAPFILE[2]}"
 
 echo "-4-----------"
- 
- mapfile -t TESTMAP < namen.csv
+
+mapfile -t TESTMAP <namen.csv
 echo "${TESTMAP[@]}"
 
 echo "---"
@@ -27,8 +33,8 @@ echo "${TESTMAP[3]}"
 echo "${TESTMAP[1]:0:4}" # Statischen Cutten
 
 INPUT="${TESTMAP[1]}"
-SUBSTRING=$(echo $INPUT| cut -d',' -f 2) # Dynamische cutten -d"TRENNZEICHEN" -f PART_AB_1
-echo $SUBSTRING 
+SUBSTRING=$(echo $INPUT | cut -d',' -f 2) # Dynamische cutten -d"TRENNZEICHEN" -f PART_AB_1
+echo $SUBSTRING
 
 echo "#########################"
 
@@ -40,33 +46,63 @@ declare -a snamen
 declare -i lauf=0
 # Test="124"
 # echo $Test
-while read -r z
-do
+while read -r z; do
     N=$(echo "$z" | cut -f1 -d",")
     V=$(echo "$z" | cut -f2 -d",")
     namen["$N"]="$V"
     snamen["$lauf"]="$N"
     ((lauf++))
-done < "$datei"
+done <"$datei"
 
 readarray -t sortiert < <(for a in "${snamen[@]}"; do echo "$a"; done | sort)
 
-echo  "sortiertesd assoziatives array"
+echo "sortiertesd assoziatives array"
 echo "---------------------"
 echo "${sortiert[@]}"
 echo "${!sortiert[@]}"
 echo "---------------------"
 
-for k in "${!sortiert[@]}"
-do
-    nn=${sortiert[$k]}                      # Hier wird der Wert des schlüssel abgefragt mit ! NUMERISCH
+for k in "${!sortiert[@]}"; do
+    nn=${sortiert[$k]} # Hier wird der Wert des schlüssel abgefragt mit ! NUMERISCH
     echo ">$k<"
-    echo "$nn -> ${namen[$nn]}"             # Schlüssel und wert printen Vorname-Nachname
-    
-    printf "[%s]-" "${sortiert[$k]}"        # Wert Pritnen Von Numerischen Schlüssel aus Sorted
-    printf "[%s]\n" "${namen[$nn]}"         # Aus Namen Den Namen Mit dem Schlüssel aus sorted
+    echo "$nn -> ${namen[$nn]}" # Schlüssel und wert printen Vorname-Nachname
+
+    printf "[%s]-" "${sortiert[$k]}" # Wert Pritnen Von Numerischen Schlüssel aus Sorted
+    printf "[%s]\n" "${namen[$nn]}"  # Aus Namen Den Namen Mit dem Schlüssel aus sorted
 done
 
 echo "------------"
 printf "[%s]\n" "${sortiert[@]}"
- 
+
+qsort() {
+    local pivot i smaller=() larger=()
+    qsort_ret=()
+    (($# == 0)) && return 0
+    pivot=$1
+    shift
+    for i; do
+        # This sorts strings lexicographically.
+        i=$($i | cut -d',' -f 2)
+        pivot=$($pivot | cut -d',' -f 2)
+        
+        echo "$i"
+        echo "$pivot"
+        echo '====='
+
+        if [[ $i < $pivot ]]; then
+            smaller+=("$i")
+        else
+            larger+=("$i")
+        fi
+    done
+    qsort "${smaller[@]}"
+    smaller=("${qsort_ret[@]}")
+    qsort "${larger[@]}"
+    larger=("${qsort_ret[@]}")
+    qsort_ret=("${smaller[@]}" "$pivot" "${larger[@]}")
+}
+
+qsort "${TESTMAP[@]}"
+declare -p qsort_ret
+
+printf "[%s]\n" "${qsort_ret[@]}"
