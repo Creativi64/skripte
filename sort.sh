@@ -82,14 +82,14 @@ qsort() {
     shift
     for i; do
         # This sorts strings lexicographically.
-        i=$( echo "$i" | cut -d',' -f 2)
-        pivot=$(echo "$pivot" | cut -d',' -f 2)
+        c_i=$( echo "$i" | cut -d',' -f 2)
+        c_pivot=$( echo "$pivot" | cut -d',' -f 2)
         
-        echo "$i"
-        echo "$pivot"
+        echo "$c_i"
+        echo "$c_pivot"
         echo '====='
 
-        if [[ $i < $pivot ]]; then
+        if [[ $c_i < $c_pivot ]]; then
             smaller+=("$i")
         else
             larger+=("$i")
