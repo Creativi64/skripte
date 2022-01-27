@@ -82,7 +82,7 @@ qsort() {
     shift
     for i; do
         # This sorts strings lexicographically.
-        c_i=$( echo "$i" | cut -d',' -f 2)
+        c_i=$( echo "$i" | cut -d',' -f 2) # -f x ist nach was er sotiert muss unten gleich sein
         c_pivot=$( echo "$pivot" | cut -d',' -f 2)
         
         echo "$c_i"
