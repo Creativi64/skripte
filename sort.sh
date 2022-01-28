@@ -33,8 +33,8 @@ echo "${TESTMAP[3]}"
 echo "${TESTMAP[1]:0:4}" # Statischen Cutten
 
 INPUT="${TESTMAP[1]}"
-SUBSTRING=$(echo "$INPUT" | cut -d',' -f 2) # Dynamische cutten -d"TRENNZEICHEN" -f PART_AB_1
-echo "$SUBSTRING"
+SUBSTRING=$(echo $INPUT | cut -d',' -f 2) # Dynamische cutten -d"TRENNZEICHEN" -f PART_AB_1
+echo $SUBSTRING
 
 echo "#########################"
 
@@ -73,60 +73,41 @@ done
 
 echo "------------"
 printf "[%s]\n" "${sortiert[@]}"
-echo "================="
-function qsort() {
 
+qsort() {
     local pivot i smaller=() larger=()
     qsort_ret=()
-    
     (($# == 0)) && return 0
-
-    local -i cut=1
-
-    #shift
+    
+    te="$1" 
+    shift
+    echo "$1"
     pivot=$1
+    
     shift
     for i; do
         # This sorts strings lexicographically.
-        #echo "/////////////////////////"
-        #echo "$cut"
-        #echo "$i"
-        #echo "$pivot"
-        #printf "\n"
-        c_i=$(echo "$i" | cut -d',' -f"$cut") # -f x ist nach was er sotiert muss unten gleich sein
-        c_pivot=$(echo "$pivot" | cut -d',' -f"$cut")
-
-        #echo "$c_i"
-        #echo "$c_pivot"
-        #echo '====='
+        c_i=$( echo "$i" | cut -d',' -f$te) # -f x ist nach was er sotiert muss unten gleich sein
+        c_pivot=$( echo "$pivot" | cut -d',' -f 2)
+        
+        echo "$c_i"
+        echo "$c_pivot"
+        echo '====='
 
         if [[ $c_i < $c_pivot ]]; then
             smaller+=("$i")
         else
             larger+=("$i")
         fi
-    done  
- 
-    qsort "${smaller[@]}"
-
+    done
+    qsort $te "${smaller[@]}"
     smaller=("${qsort_ret[@]}")
-
-    qsort "${larger[@]}"
-
+    qsort $te "${larger[@]}"
     larger=("${qsort_ret[@]}")
-
     qsort_ret=("${smaller[@]}" "$pivot" "${larger[@]}")
-    
-
 }
-echo "start"
 
-qsort "${TESTMAP[@]}"
+qsort 2 ${TESTMAP[*]}
+declare -p qsort_ret
 
-declare -a qsort_ret
-printf "%s\n" "${qsort_ret[@]}" 
-
-echo "===========================" 
-
-qsort  "${TESTMAP[@]}" 
-printf "%s\n" "${qsort_ret[@]}" 
+printf "[%s]\n" "${qsort_ret[@]}"
