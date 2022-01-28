@@ -74,40 +74,44 @@ done
 echo "------------"
 printf "[%s]\n" "${sortiert[@]}"
 
-qsort() {
-    local pivot i smaller=() larger=()
-    qsort_ret=()
+
+#
+# SORT VIA ITERRATIVE QUICKSORT 
+#
+
+# quicksorts positional arguments
+# return is in array qsort_ret
+# Note: iterative, NOT recursive! :)
+qsorti() {
     (($# == 0)) && return 0
-    
-    te="$1" 
+    local -i teiler=$1
     shift
-    echo "$1"
-    pivot=$1
-    
-    shift
-    for i; do
-        # This sorts strings lexicographically.
-        c_i=$( echo "$i" | cut -d',' -f$te) # -f x ist nach was er sotiert muss unten gleich sein
-        c_pivot=$( echo "$pivot" | cut -d',' -f 2)
-        
-        echo "$c_i"
-        echo "$c_pivot"
-        echo '====='
-
-        if [[ $c_i < $c_pivot ]]; then
-            smaller+=("$i")
-        else
-            larger+=("$i")
-        fi
+    local stack=(0 $(($# - 1))) beg end i pivot smaller larger
+    qsort_ret=("$@")
+    while ((${#stack[@]})); do
+        beg=${stack[0]}
+        end=${stack[1]}
+        stack=("${stack[@]:2}")
+        smaller=() larger=()
+        pivot=${qsort_ret[beg]}
+        for ((i = beg + 1; i <= end; ++i)); do
+            if [[ $(echo "${qsort_ret[i]}" | cut -d',' -f"$teiler") < $(echo "$pivot" | cut -d',' -f"$teiler") ]]; then
+                smaller+=("${qsort_ret[i]}")
+            else
+                larger+=("${qsort_ret[i]}")
+            fi
+        done
+        qsort_ret=("${qsort_ret[@]:0:beg}" "${smaller[@]}" "$pivot" "${larger[@]}" "${qsort_ret[@]:end+1}")
+        if ((${#smaller[@]} >= 2)); then stack+=("$beg" "$((beg + ${#smaller[@]} - 1))"); fi
+        if ((${#larger[@]} >= 2)); then stack+=("$((end - ${#larger[@]} + 1))" "$end"); fi
     done
-    qsort $te "${smaller[@]}"
-    smaller=("${qsort_ret[@]}")
-    qsort $te "${larger[@]}"
-    larger=("${qsort_ret[@]}")
-    qsort_ret=("${smaller[@]}" "$pivot" "${larger[@]}")
 }
+echo "####################"
 
-qsort 2 ${TESTMAP[*]}
-declare -p qsort_ret
+qsorti 1 "${TESTMAP[@]}"
+declare qsort_ret
 
-printf "[%s]\n" "${qsort_ret[@]}"
+printf "%s\n" "${qsort_ret[@]}"
+echo "==========="
+qsorti 2 "${TESTMAP[@]}"
+printf "%s\n" "${qsort_ret[@]}"
