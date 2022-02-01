@@ -1,0 +1,41 @@
+dn: CN=Test,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+changetype: add
+accountExpires: 9223372036854775807
+cn: Test
+codePage: 0
+countryCode: 0
+displayName: Test
+distinguishedName: CN=Test,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+dSCorePropagationData: 16010101000000.0Z
+givenName: Test
+instanceType: 4
+name: Test
+objectCategory: 
+ CN=Person,CN=Schema,CN=Configuration,DC=kreuzerKekNETWORK,DC=de
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+sAMAccountName: Test
+#userAccountControl: 514
+userPrincipalName: Test@kreuzerKekNETWORK.de
+uSNChanged: 45341
+uSNCreated: 45336
+whenChanged: 20211116110306.0Z
+whenCreated: 20211116110306.0Z
+userPassword: Hallo123!
+userAccountControl: 544
+
+dn: CN=Test,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+changetype: modify
+replace: unicodePwd
+#unicodePwd::XABCAGUAcwB0AGUARgBpAHIAbQBhAFwAIQAyADQAMQAyADIANABEAGUAcgBXAGUAbAB0ACIA
+unicodePwd::IgA4ADcAOQB3ADYAdgA5ADYAdwA4ADkANwBiAHcAdgA4ADkANAAzAHYANwA4ADkANAB0ADMAdgA3ADgAOQAwADQAOQA4AHEANAAzADkAOAA2ACIA
+
+-
+
+dn: CN=Test,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+changetype: modify
+replace: userAccountControl
+userAccountControl: 544
+-

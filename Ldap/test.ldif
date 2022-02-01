@@ -1,0 +1,37 @@
+dn: CN=Piet,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=kreuzerKekNETWORK,DC=de
+codePage: 0
+countryCode: 0
+distinguishedName: CN=Piet,CN=Users,DC=forest,DC=kreuzerKekNETWORK,DC=de
+cn: Piet Prutser
+sn: Prutser
+givenName: Piet
+displayName: Piet Prutser
+name: Piet Prutser
+telephoneNumber: 123456
+instanceType: 4
+userAccountControl: 514
+accountExpires: 0
+uidNumber: 600
+gidNumber: 600
+sAMAccountName: pprutser
+userPrincipalName: P.Prutser@example.com
+altSecurityIdentities: Kerberos:pprutser@EXAMLE.COM
+mail: P.Prutser@example.com
+
+dn: CN=Piet,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+changetype: modify
+replace: unicodePwd
+unicodePwd::XABCAGUAcwB0AGUARgBpAHIAbQBhAFwAIQAyADQAMQAyADIANABEAGUAcgBXAGUAbAB0ACIA
+-
+
+dn: CN=Piet,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+changetype: modify
+replace: userAccountControl
+userAccountControl: 512
+-

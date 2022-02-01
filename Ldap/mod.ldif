@@ -1,0 +1,36 @@
+dn: CN=Test,OU=Firma,DC=Kreuzerkeknetwork,DC=de
+changetype: add
+accountExpires: 9223372036854775807
+cn: Test
+codePage: 0
+countryCode: 0
+displayName: Test
+distinguishedName: CN=Test,OU=Firma,DC=Kreuzerkeknetwork,DC=de
+dSCorePropagationData: 16010101000000.0Z
+givenName: Test01
+instanceType: 4
+name: Test
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=Kreuzerkeknetwork,DC=de
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+sAMAccountName: Test
+userAccountControl: 544
+userPrincipalName: Test@Kreuzerkeknetwork.de
+uSNChanged: 69693
+uSNCreated: 69676
+whenChanged: 20211117143427.0Z
+whenCreated: 20211117141558.0Z
+
+dn: CN=Test,OU=Firma,DC=Kreuzerkeknetwork,DC=de
+changetype: modify
+#replace: sAMAccountName
+#sAMAccountName: Fritz02
+replace: userPassword
+userPassword: Hallo
+-
+#replace: userAccountControl
+#userAccountControl: 544
+# userAccountControl: 66048
+#-
