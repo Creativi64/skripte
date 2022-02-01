@@ -1,5 +1,5 @@
 #!/bin/bash
-readarray -t testarray < CSV/schulaufgabe.csv
+readarray -t testarray < ips.csv
 
 if [ $1 -gt ${#testarray[@]} ]
 
@@ -11,7 +11,7 @@ exit 0
 
 fi
 
-if [ $2>5 ]
+if [ $2 -gt "$(echo ${#testarray} | grep -o "." | wc -l)" ]
 
 then
 
@@ -21,4 +21,4 @@ exit 0
 
 fi
 
-echo ${testarray[$1]} | cut -d ',' -f $2
+echo ${testarray[$1]} | cut -d '.' -f $2
