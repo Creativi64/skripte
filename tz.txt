@@ -1,0 +1,3 @@
+Frage 3
+
+Der Kernenl und die treiber müssen miteinander Kompatiebel sein, conf dateien in etc müssen zum kernen des zu wieder hestellenden systems passen.
