@@ -173,7 +173,10 @@ printf "%s\n" "${Ausgabe[@]}"
 text="$(printf "%s\n" "${Ausgabe[@]}" )"
  zaehler=1
  #"$($zaehler "$item" "\")"
-dialog --infobox "tag item to choose" 15 50 "$text"
+echo "========"
+ echo "$text"
+
+dialog --msgbox "$text" 15 50
 
 #result=$(cat "/tmp/hhhh$$")
 
