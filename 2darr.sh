@@ -1,6 +1,12 @@
 #!/bin/bash
 readarray -t testarray < ips.csv
 
+echo ${#testarray[@]}
+echo ${#testarray[*]}
+echo "--"
+echo "${testarray[1]}"
+echo ${#testarray[1]}
+
 if [ $1 -gt ${#testarray[@]} ]
 
 then
