@@ -3,6 +3,7 @@
 DELIMETER=","
 
 mapfile -t LISTE <zahlen.csv
+
 declare -a AUSGABE
 
 printf "%s\n" "${LISTE[@]}"
