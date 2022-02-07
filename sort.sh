@@ -150,6 +150,7 @@ echo "--"
 # IP Sort
 
 mapfile -t TESTMAP <ips.csv
+
 for ((i = 4; i > 0; i--)); do
     echo "${i}"
     IPqsorti "${i}" "${TESTMAP[@]}"
