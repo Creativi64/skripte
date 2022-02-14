@@ -1,24 +1,24 @@
-dn: CN=Test,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
 changetype: add
 accountExpires: 9223372036854775807
 cn: Test
 codePage: 0
 countryCode: 0
 displayName: Test
-distinguishedName: CN=Test,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+distinguishedName: CN=Test,OU=Firma,DC=PHKR,DC=int
 dSCorePropagationData: 16010101000000.0Z
 givenName: Test
 instanceType: 4
 name: Test
 objectCategory: 
- CN=Person,CN=Schema,CN=Configuration,DC=kreuzerKekNETWORK,DC=de
+ CN=Person,CN=Schema,CN=Configuration,DC=PHKR,DC=int
 objectClass: top
 objectClass: person
 objectClass: organizationalPerson
 objectClass: user
 sAMAccountName: Test
 #userAccountControl: 514
-userPrincipalName: Test@kreuzerKekNETWORK.de
+userPrincipalName: Test@PHKR.int
 uSNChanged: 45341
 uSNCreated: 45336
 whenChanged: 20211116110306.0Z
@@ -26,7 +26,7 @@ whenCreated: 20211116110306.0Z
 userPassword: Hallo123!
 userAccountControl: 544
 
-dn: CN=Test,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
 changetype: modify
 replace: unicodePwd
 #unicodePwd::XABCAGUAcwB0AGUARgBpAHIAbQBhAFwAIQAyADQAMQAyADIANABEAGUAcgBXAGUAbAB0ACIA
@@ -34,7 +34,7 @@ unicodePwd::IgA4ADcAOQB3ADYAdgA5ADYAdwA4ADkANwBiAHcAdgA4ADkANAAzAHYANwA4ADkANAB0
 
 -
 
-dn: CN=Test,OU=Firma,DC=kreuzerKekNETWORK,DC=de
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
 changetype: modify
 replace: userAccountControl
 userAccountControl: 544

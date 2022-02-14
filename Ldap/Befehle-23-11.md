@@ -134,10 +134,14 @@ sAMAccountName: Fritz12345
 -
 
 ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administrator@kreuzerkeknetwork.de -W
+ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administrator@PHKR.INT -W
 
 <http://pig.made-it.com/pig-adusers.html>
 
 ## PAWWORT SETZEN Können
+
+ldapmodify -v -x -c -a -f "backuploadpas.ldif" -H "ldaps://SERVERPHKR.PHKR.INT" -D Administrator@PHKR.INT -W
+
 
 <http://woshub.com/password-policy-active-directory/>
 
@@ -297,5 +301,7 @@ kinit Administrator@PHKR.INT -k -t tab2.keytab
 <https://sid-500.com/2017/03/31/active-directory-zertifikatsdienste-teil-2-installation-der-zertifizierungsstellen-webregistrierung/>
 <https://social.technet.microsoft.com/wiki/contents/articles/2980.ldap-over-ssl-ldaps-certificate.aspx>
 <https://techexpert.tips/de/windows-de/aktivieren-des-active-directory-ldap-over-ssl-features/>
+
+<https://geekdudes.wordpress.com/2020/02/18/linux-connecting-to-windows-ldap-over-ssl-ldaps-using-certificate/>
 
 <https://wiki.ubuntuusers.de/GRUB_2/Konfiguration/>

@@ -9,6 +9,7 @@ ZEILEN=${#LISTE[@]}
 echo "${LISTE[0]}" | grep -o "$DELIMETER" | wc -l
 SPALTEN=$(echo "${LISTE[0]}" | grep -o "$DELIMETER" | wc -l)
 echo "--" 
+
 declare -i spalte=0
 for((i=0;i<(("$ZEILEN"));i++)); 
 do
