@@ -142,9 +142,90 @@ ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administr
 
 ldapmodify -v -x -c -a -f "backuploadpas.ldif" -H "ldaps://SERVERPHKR.PHKR.INT" -D Administrator@PHKR.INT -W
 
+# User Erstelle mit Unicode PWD
+
+Passwort: "SuperSchueler123"
+
+Passwort erstellen mit
+
+```bash
+ echo -n "\"[Passwort]\"" | iconv -f UTF8 -t UTF16LE | base64 -w 0
+ ```
+
+```bash
+ echo -n "\"SuperSchueler123\"" | iconv -f UTF8 -t UTF16LE | base64 -w 0
+ ```
+## File
+
+```ldif
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: add
+accountExpires: 9223372036854775807
+cn: Test
+codePage: 0
+countryCode: 0
+displayName: Test
+distinguishedName: CN=Test,OU=Firma,DC=PHKR,DC=int
+dSCorePropagationData: 16010101000000.0Z
+givenName: Test
+sAMAccountName: Test
+#userAccountControl: 514
+userPrincipalName: Test@PHKR.int
+uSNChanged: 45341
+uSNCreated: 45336
+whenChanged: 20211116110306.0Z
+whenCreated: 20211116110306.0Z
+userPassword: Hallo123!
+userAccountControl: 544
+
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: unicodePwd
+unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
+
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: userAccountControl
+userAccountControl: 512
+-name: Test
+objectCategory: 
+ CN=Person,CN=Schema,CN=Configuration,DC=PHKR,DC=int
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+sAMAccountName: Test
+#userAccountControl: 514
+userPrincipalName: Test@PHKR.int
+uSNChanged: 45341
+uSNCreated: 45336
+whenChanged: 20211116110306.0Z
+whenCreated: 20211116110306.0Z
+userPassword: Hallo123!
+userAccountControl: 544
+
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: unicodePwd
+unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
+
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: userAccountControl
+userAccountControl: 512
+-
+
+```
+
+## Befehl
+
+ldapmodify -c -a -f "backuploadpas.ldif" -H "ldaps://SERVERPHKR.PHKR.INT:636" -D Administrator@PHKR.INT -W
+
+## LInks
 
 <http://woshub.com/password-policy-active-directory/>
 
+<http://pig.made-it.com/pig-adusers.html>
 # Kreberos Ticket Bekommen
 
 ## Kerberos Datei Linix
@@ -267,6 +348,24 @@ dns_lookup_kdc = true
 
 ```
 
+# Zertifikate Installieren von Win Server auf Linux
+
+Auf Win server zertifkat erstellen
+
+cp zert.crt /usr/share/ca-certificates/
+
+sudo dpkg-reconfigure ca-certificates
+
+
+<https://techexpert.tips/de/windows-de/aktivieren-des-active-directory-ldap-over-ssl-features/>
+
+<https://geekdudes.wordpress.com/2020/02/18/linux-connecting-to-windows-ldap-over-ssl-ldaps-using-certificate/>
+
+<https://stackoverflow.com/questions/642284/do-i-need-to-convert-cer-to-crt-for-apache-ssl-certificates-if-so-how>
+
+<https://blog.wydler.eu/2014/08/02/ca-zertifikat-unter-debian-importieren/>
+
+
 ## Kreberos Ticket Anfordern
 
 kini [DomainUser(Admin)]
@@ -286,6 +385,7 @@ ktutil: wkt ph.keytab
 ## Tiket Holen
 
 kinit Administrator@PHKR.INT -k -t tab2.keytab
+
 
 
 # Links

@@ -8,8 +8,26 @@ displayName: Test
 distinguishedName: CN=Test,OU=Firma,DC=PHKR,DC=int
 dSCorePropagationData: 16010101000000.0Z
 givenName: Test
-instanceType: 4
-name: Test
+sAMAccountName: Test
+#userAccountControl: 514
+userPrincipalName: Test@PHKR.int
+uSNChanged: 45341
+uSNCreated: 45336
+whenChanged: 20211116110306.0Z
+whenCreated: 20211116110306.0Z
+userPassword: Hallo123!
+userAccountControl: 544
+
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: unicodePwd
+unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
+
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: userAccountControl
+userAccountControl: 512
+-name: Test
 objectCategory: 
  CN=Person,CN=Schema,CN=Configuration,DC=PHKR,DC=int
 objectClass: top
@@ -29,13 +47,10 @@ userAccountControl: 544
 dn: CN=Test,OU=Firma,DC=PHKR,DC=int
 changetype: modify
 replace: unicodePwd
-#unicodePwd::XABCAGUAcwB0AGUARgBpAHIAbQBhAFwAIQAyADQAMQAyADIANABEAGUAcgBXAGUAbAB0ACIA
-unicodePwd::IgA4ADcAOQB3ADYAdgA5ADYAdwA4ADkANwBiAHcAdgA4ADkANAAzAHYANwA4ADkANAB0ADMAdgA3ADgAOQAwADQAOQA4AHEANAAzADkAOAA2ACIA
-
--
+unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
 
 dn: CN=Test,OU=Firma,DC=PHKR,DC=int
 changetype: modify
 replace: userAccountControl
-userAccountControl: 544
+userAccountControl: 512
 -
