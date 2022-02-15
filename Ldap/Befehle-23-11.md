@@ -90,7 +90,7 @@ des wegen ist es vorteil hast user fürs erste zu deaktivieren bis man sie kompl
 
 ## ldif
 
-ldifde "(objectClass=User)" -l "objectSID" -f ".\backup.ldf" -d "CN=[UserNAme],OU=[Unit],DC=[Domain],DC=[TDL]"
+ldifde -r "(objectClass=User)" -l "objectSID" -f ".\backup.ldf" -d "CN=[UserNAme],OU=[Unit],DC=[Domain],DC=[TDL]"
 
 ## User
 
