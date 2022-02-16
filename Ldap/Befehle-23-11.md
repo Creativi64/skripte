@@ -141,7 +141,7 @@ ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administr
 ## PAWWORT SETZEN Können
 
 ldapmodify -v -x -c -a -f "backuploadpas.ldif" -H "ldaps://SERVERPHKR.PHKR.INT" -D Administrator@PHKR.INT -W
-
+ldapmodify -v -x -c -a -f "backuploadpas2.ldif" -H "ldaps://SERVERPHKR.PHKR.INT" -D Administrator@PHKR.INT -W
 # User Erstelle mit Unicode PWD
 
 Passwort: "SuperSchueler123"

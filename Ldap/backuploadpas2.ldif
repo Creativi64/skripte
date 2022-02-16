@@ -1,34 +1,35 @@
+
 dn: CN=Piet,OU=Firma,DC=PHKR,DC=int
-changetype: modify
+changetype: add
 objectClass: top
 objectClass: person
 objectClass: organizationalPerson
-objectClass: user 
+objectClass: user
 objectCategory: CN=Piet,OU=Firma,DC=PHKR,DC=int
 codePage: 0
 countryCode: 0
 distinguishedName: CN=Piet,OU=Firma,DC=PHKR,DC=int
 cn: Piet
-sn: Prutser
 givenName: Piet
 displayName: Piet
 name: Piet
 telephoneNumber: 123456
-instanceType: 4
-userAccountControl: 514
-accountExpires: 0
-uidNumber: 600
-gidNumber: 600
-sAMAccountName: pprutser
-userPrincipalName: Test
-
-dn: CN=Piet,OU=Firma,DC=PHKR,DC=int
-changetype: modify
-replace: unicodePwd
-unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
-
-dn: CN=Piet,OU=Firma,DC=PHKR,DC=int
-changetype: modify
-replace: userAccountControl
 userAccountControl: 512
--
+accountExpires: 0
+sAMAccountName: pps
+userPrincipalName: Test
+whenCreated: 20220215121859.0Z
+whenChanged: 20220215121859.0Z
+#-
+#
+#dn: CN=Piet,OU=Firma,DC=PHKR,DC=int
+#changetype: modify
+#replace: unicodePwd
+#unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
+#
+#dn: CN=Piet,OU=Firma,DC=PHKR,DC=int
+#changetype: modify
+#replace: userAccountControl
+#userAccountControl: 512
+#-
+#
