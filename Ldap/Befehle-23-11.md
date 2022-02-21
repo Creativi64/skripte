@@ -217,6 +217,41 @@ userAccountControl: 512
 
 ```
 
+```ldif
+dn: CN=KEK2,OU=Firma,DC=phkr,DC=int
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+cn: KEK2
+givenName: KEK2
+distinguishedName: CN=KEK2,OU=Firma,DC=phkr,DC=int
+instanceType: 4
+whenCreated: 20220215121859.0Z
+whenChanged: 20220215121859.0Z
+displayName: KEK2
+name: KEK2
+userAccountControl: 514
+countryCode: 0
+sAMAccountName: KEK2
+userPrincipalName: KEK2@phkr.int
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=phkr,DC=int
+
+dn: CN=KEK2,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: unicodePwd
+unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
+
+dn: CN=KEK2,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: userAccountControl
+userAccountControl: 66048
+-
+
+
+```
+
 ## Befehl
 
 ldapmodify -c -a -f "backuploadpas.ldif" -H "ldaps://SERVERPHKR.PHKR.INT:636" -D Administrator@PHKR.INT -W

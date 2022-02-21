@@ -1,35 +1,31 @@
-dn: CN=MO,OU=Firma,DC=phkr,DC=int
+dn: CN=KEK2,OU=Firma,DC=phkr,DC=int
 changetype: add
 objectClass: top
 objectClass: person
 objectClass: organizationalPerson
 objectClass: user
-cn: MO
-givenName: MO
-distinguishedName: CN=MO,OU=Firma,DC=phkr,DC=int
+cn: KEK2
+givenName: KEK2
+distinguishedName: CN=KEK2,OU=Firma,DC=phkr,DC=int
 instanceType: 4
 whenCreated: 20220215121859.0Z
 whenChanged: 20220215121859.0Z
-displayName: MO
-uSNCreated: 36923
-uSNChanged: 36928
-name: MO
-objectGUID:: rrBhLhFdJ0WCBRAOFmE/mw==
-userAccountControl: 66048
-badPwdCount: 0
-codePage: 0
+displayName: KEK2
+name: KEK2
+userAccountControl: 514
 countryCode: 0
-badPasswordTime: 0
-lastLogoff: 0
-lastLogon: 0
-pwdLastSet: 132894011394102426
-primaryGroupID: 513
-objectSid:: AQUAAAAAAAUVAAAAGYlSuf5WupiUNcetVwQAAA==
-accountExpires: 9223372036854775807
-logonCount: 0
-sAMAccountName: MO
-sAMAccountType: 805306368
-userPrincipalName: MO@phkr.int
+sAMAccountName: KEK2
+userPrincipalName: KEK2@phkr.int
 objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=phkr,DC=int
-dSCorePropagationData: 16010101000000.0Z
+
+dn: CN=KEK2,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: unicodePwd
+unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
+
+dn: CN=KEK2,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: userAccountControl
+userAccountControl: 66048
+-
 
