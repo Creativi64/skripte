@@ -1,5 +1,6 @@
 param([Parameter(Mandatory=$true)][String]$samAccountName)
- 
+
+
 $fullPath = "\\SERVERPHKR\Homes\{0}" -f $samAccountName
 $driveLetter = "H:"
  
@@ -10,13 +11,15 @@ if($User -ne $Null) {
     $homeShare = New-Item -path $fullPath -ItemType Directory -force -ea Stop
  
     $acl = Get-Acl $homeShare
- 
-    $FileSystemRights = [System.Security.AccessControl.FileSystemRights]"Modify"
+    
+    $acl
+
+    $FileSystemRights = [System.Security.AccessControl.FileSystemRights]"FullControl"
     $AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
     $InheritanceFlags = [System.Security.AccessControl.InheritanceFlags]"ContainerInherit, ObjectInherit"
     $PropagationFlags = [System.Security.AccessControl.PropagationFlags]"InheritOnly"
  
-    $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule ($User.SID, $FileSystemRights, $InheritanceFlags, $PropagationFlags, $AccessControlType)
+    $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule ($User.SID, $FileSystemRights,<# $InheritanceFlags, $PropagationFlags,#> $AccessControlType)
     $acl.AddAccessRule($AccessRule)
  
     Set-Acl -Path $homeShare -AclObject $acl -ea Stop

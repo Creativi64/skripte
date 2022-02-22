@@ -1,3 +1,6 @@
 #!/bin/bash
 
-winexe -U "[UserName]%[Passwort]" //[RemotePc] "cmd /c; $[Befehl]"
+Name="Test"
+
+./winexe -U "Administrator" //10.200.10.1 "powershell c\; c:\Homes\benutzerhome.ps1 $Name"
+#./winexe -U "Administrator" //10.200.10.1 "powershell c\; c:\Homes\benutzerhome.ps1 Test"
