@@ -3,8 +3,7 @@ changetype: modify
 replace: userAccountControl
 userAccountControl: 512
 name: Test
-objectCategory: 
- CN=Person,CN=Schema,CN=Configuration,DC=PHKR,DC=int
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=PHKR,DC=int
 objectClass: top
 objectClass: person
 objectClass: organizationalPerson

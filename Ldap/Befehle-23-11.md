@@ -134,6 +134,7 @@ sAMAccountName: Fritz12345
 -
 
 ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administrator@kreuzerkeknetwork.de -W
+
 ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administrator@PHKR.INT -W
 
 <http://pig.made-it.com/pig-adusers.html>
@@ -262,6 +263,8 @@ ldapmodify -c -a -f "backuploadpas.ldif" -H "ldaps://SERVERPHKR.PHKR.INT:636" -D
 
 <http://pig.made-it.com/pig-adusers.html>
 # Kreberos Ticket Bekommen
+
+
 
 ## Kerberos Datei Linix
 
@@ -421,6 +424,7 @@ ktutil: wkt ph.keytab
 
 kinit Administrator@PHKR.INT -k -t tab2.keytab
 
+kinit Administrator@PHKR.INT -k -t ph.keytab
 
 
 # Links
