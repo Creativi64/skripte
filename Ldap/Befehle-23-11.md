@@ -113,7 +113,9 @@ dapsearch -x -LLL -D "Administrator@kreuzerkeknetwork.de" -W -b "OU=Firma,DC=Kre
 ---
 
 ldapsearch -x -b "DC=Test,DC=local" -H "ldap://192.168.179.71"
+
 ldapsearch -x -LLL -D "Administrator@Test.local" -W -b "DC=Test,DC=local" -H "ldap://192.168.179.71" "(&(sAMAccountType=805306368)(sn=Fritz)(sAMAccountName~=Fritz*))" "*"
+
 ldapsearch -x -LLL -D "Administrator@Test.local" -W -b "DC=Test,DC=local" -H "ldap://192.168.179.71" "(&(sAMAccountType=805306368))" "\*"
 
 ## User Export
@@ -126,12 +128,12 @@ ldifde -i -f "c:\backup.ldf" -u
 
 ## bei import ändern
 
-dn: CN=Fritz,OU=Firma,DC=kreuzerKekNETWORK,DC=de
-changetype: modify
-replace: sAMAccountName
-sAMAccountName: Fritz12345
+dn: CN=Fritz,OU=Firma,DC=kreuzerKekNETWORK,DC=de\
+changetype: modify\
+replace: sAMAccountName\
+sAMAccountName: [NewName]
 
--
+\-
 
 ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administrator@kreuzerkeknetwork.de -W
 
@@ -142,6 +144,7 @@ ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administr
 ## PAWWORT SETZEN Können
 
 ldapmodify -v -x -c -a -f "backuploadpas.ldif" -H "ldaps://SERVERPHKR.PHKR.INT" -D Administrator@PHKR.INT -W
+
 ldapmodify -v -x -c -a -f "backuploadpas2.ldif" -H "ldaps://SERVERPHKR.PHKR.INT" -D Administrator@PHKR.INT -W
 # User Erstelle mit Unicode PWD
 
@@ -264,7 +267,9 @@ ldapmodify -c -a -f "backuploadpas.ldif" -H "ldaps://SERVERPHKR.PHKR.INT:636" -D
 <http://pig.made-it.com/pig-adusers.html>
 # Kreberos Ticket Bekommen
 
+apt-get install krb5-user
 
+<http://www.itadmintools.com/2011/07/creating-kerberos-keytab-files.html>
 
 ## Kerberos Datei Linix
 
@@ -416,9 +421,9 @@ klist
 
 # Keytab File
 
->#ktutil
-ktutil: addent -password -p Administrator@PHKR.INT -k 5 -f
-ktutil: wkt ph.keytab
+>#ktutil\
+>ktutil: addent -password -p Administrator@PHKR.INT -k 5 -f\
+>ktutil: wkt ph.keytab
 
 ## Tiket Holen
 
