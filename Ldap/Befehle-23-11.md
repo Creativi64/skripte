@@ -116,7 +116,9 @@ ldapsearch -x -b "DC=Test,DC=local" -H "ldap://192.168.179.71"
 
 ldapsearch -x -LLL -D "Administrator@Test.local" -W -b "DC=Test,DC=local" -H "ldap://192.168.179.71" "(&(sAMAccountType=805306368)(sn=Fritz)(sAMAccountName~=Fritz*))" "*"
 
-ldapsearch -x -LLL -D "Administrator@Test.local" -W -b "DC=Test,DC=local" -H "ldap://192.168.179.71" "(&(sAMAccountType=805306368))" "\*"
+ldapsearch -x -LLL -D "Administrator@Test.local" -W -b "DC=Test,DC=local" -H "ldap://192.168.179.71" "(&(sAMAccountType=805306368))" "*"
+
+ldapsearch -x -LLL -D "Administrator@PHKR.INT" -W -b "OU=Firma,DC=phkr,DC=int" -H "ldap://PHKR.INT" -s sub "(&(sAMAccountType=805306368))" "*"
 
 ## User Export
 
@@ -140,6 +142,10 @@ ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administr
 ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administrator@PHKR.INT -W
 
 <http://pig.made-it.com/pig-adusers.html>
+
+## Port scanen
+
+nmap -P0 -p 636 phkr.int
 
 ## PAWWORT SETZEN Können
 
