@@ -437,7 +437,75 @@ kinit Administrator@PHKR.INT -k -t tab2.keytab
 
 kinit Administrator@PHKR.INT -k -t ph.keytab
 
+# Webserver aufsetzen
 
+## instalation
+https://github.com/angristan/nginx-autoinstall
+
+## fixes
+
+apt install libuuid1=2.36.1-8+deb11u1
+
+apt install libxml2=2.9.10+dfsg-6.7
+
+apt install libssl1.1=1.1.1k-1+deb11u1
+ 
+ ## config file
+ ```
+ user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 2048;
+    use epoll;
+    multi_accept on;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    aio threads;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    server_tokens off;
+
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_proxied any;
+    gzip_types *;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*.conf;
+
+	server {
+		listen         80 default_server;
+		listen         [::]:80 default_server;
+		server_name    localhost;
+		root           [BasePath];
+		index          index.html;
+		try_files $uri /index.html;
+	}
+}
+
+
+ ```
+## Konfig datei
+
+ /etc/apache2/apache2.conf   
+
+ 
+# systemd befehle
+
+systemctl status  apache2
+
+systemctl restart  apache2
 # Links
 
 <http://www.itadmintools.com/2011/07/creating-kerberos-keytab-files.html>
