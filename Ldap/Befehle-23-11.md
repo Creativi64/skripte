@@ -451,6 +451,8 @@ apt install libxml2=2.9.10+dfsg-6.7
 apt install libssl1.1=1.1.1k-1+deb11u1
  
  ## config file
+
+ /etc/nginx/nginx.conf
  ```
  user www-data;
 worker_processes auto;
@@ -496,16 +498,75 @@ http {
 
 
  ```
-## Konfig datei
+## Konfig datei mit php
+ /etc/nginx/nginx.conf
+ ```
+ user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
 
- /etc/apache2/apache2.conf   
+events {
+    worker_connections 2048;
+    use epoll;
+    multi_accept on;
+}
 
- 
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    aio threads;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    server_tokens off;
+
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_proxied any;
+    gzip_types *;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*.conf;
+
+	server {
+		listen         80 default_server;
+		listen         [::]:80 default_server;
+		server_name    localhost;
+		root           /home/philipp/skripte/serverPHP;
+		index          index.php index.html;
+		#try_files $uri /index.html;
+
+		location / {
+			try_files $uri $uri/ =404;
+		}
+		location ~ \.php$ {
+			include fastcgi_params;
+			fastcgi_intercept_errors on;
+			fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+			fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_s>
+		}
+
+		location ~ /\.ht {
+			deny all;
+		}
+	}
+}
+
+ ```
+
+ https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04 
+
+ https://stackoverflow.com/questions/43262435/nginxs-fastcgi-php-conf-snippet-is-missing
 # systemd befehle
 
-systemctl status  apache2
+systemctl status  nginx
 
-systemctl restart  apache2
+systemctl restart  nginx
 # Links
 
 <http://www.itadmintools.com/2011/07/creating-kerberos-keytab-files.html>
