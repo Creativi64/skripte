@@ -547,8 +547,9 @@ http {
 		location ~ \.php$ {
 			include fastcgi_params;
 			fastcgi_intercept_errors on;
-			fastcgi_pass unix:/run/php/php7.4-fpm.sock;
-			fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_s>
+			#fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+			fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+			fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
 		}
 
 		location ~ /\.ht {
@@ -567,6 +568,137 @@ http {
 systemctl status  nginx
 
 systemctl restart  nginx
+
+# cert selbst erstellen
+
+> /etc/hosts
+`10.200.10.2 linux11.phkr.int`
+
+> Länder Kürzel
+`DE`
+
+muss mit der domain addresse im server und cert identisch sein
+
+## SSL zertifikate anlegen
+
+> `mkdir [WAHTEVERPLACE] && cd [WAHTEVERPLACE]`
+ 
+`mkdir /root/ca3 && cd /root/ca3`
+
+> `openssl req -new -x509 -newkey rsa:2048 -keyout [NAMECA].pem -out [NAMECA].pem -days 3650`
+
+`openssl req -new -x509 -newkey rsa:2048 -keyout cakey.pem -out cacert.pem -days 3650`
+
+Passwort vergeben
+
+Länder Kürzel angben => "DE"
+
+eventuell Andere Daten
+
+"Common Name" -> "Domain Name" , bcwn
+
+>`chmod 600 [NAMECA].pem`
+
+`chmod 600 cakey.pem`
+###  CA cert erfolgreich erstellt
+
+>`openssl genrsa -out [SERVERKEY].pem -aes128 2048 `
+
+`openssl genrsa -out serverkey.pem -aes128 2048` 
+
+dump passwort vergeben wird glieich wieder entfetnt
+
+>`openssl rsa -in [SERVERKEY].pem -out [SERVERKEY].pem`
+
+`openssl rsa -in serverkey.pem -out serverkey.pem`
+
+passwort eingeben
+
+## Server cert erstellt
+
+>`openssl req -new -key [SERVERKEY].pem -out req.pem -nodes`
+
+`openssl req -new -key serverkey.pem -out req.pem -nodes`
+
+GENAU gleiche Daten eintragen wie Beim erstellen des CA certs
+
+Common name MUSS DOMAIN NAME sein 
+
+challenge passwort leer lassen
+
+## server sighing req erstellt
+
+## trusten
+
+
+
+cp cacert.pem /usr/local/share/ca-certificates/cacert.crt
+sudo update-ca-certificates
+
+# Nginx conf mit cert
+
+``` 
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 2048;
+    use epoll;
+    multi_accept on;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    aio threads;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    server_tokens off;
+
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_proxied any;
+    gzip_types *;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*.conf;
+	server{
+		listen 80;
+		server_name linux.phkr.int;
+		return 301 https://localhost$request_uri;
+	}
+
+	server {	 
+		listen		443 ssl http2; 
+		ssl_certificate /usr/local/share/ca-certificates/servercert.crt;
+		ssl_certificate_key /etc/ssl/serverkey.pem;
+		server_name    linux11.phkr.int;
+		root           /home/philipp/skripte/serverPHP;
+		index          index.php index.html; 
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+		location ~ \.php$ {
+        		 include fastcgi_params;
+			fastcgi_intercept_errors on;
+        		fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+			fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+    		}
+
+    		location ~ /\.ht {
+        		deny all;
+    		}
+	}
+}
+```
 # Links
 
 <http://www.itadmintools.com/2011/07/creating-kerberos-keytab-files.html>
