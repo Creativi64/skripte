@@ -626,11 +626,44 @@ Common name MUSS DOMAIN NAME sein
 
 challenge passwort leer lassen
 
-## server sighing req erstellt
+## OPEN ssl config anpassen
 
+in '/etc/ssl/openssl.cnf'
+
+> [CA_default]
+
+```dir             = .              # Where everything is kept 
+new_certs_dir   = $dir           # default place for new certs 
+private_key     = $dir/cakey.pem # The private key 
+RANDFILE        = $dir/.rand     # private random number file 
+default_days    = 3650           # how long to certify for 
+```
+
+> [policy_match]
+```
+stateOrProvinceName     = optional
+```
+
+zu sätzliche nötige datei erzeugen
+
+```echo 01 > serial```
+
+```touch index.txt```
+
+## eigenser zertifikat signieren
+
+```openssl ca -in req.pem -notext -out servercert.pem```
+ 
+ passwort eigeben
+
+ und zweimal y
+
+## Certs kopieren
+
+cp servercert.pem /usr/local/share/ca-certificates/servercert.crt
+cp serverkey.pem /etc/ssl/serverkey.pem
+ 
 ## trusten
-
-
 
 cp cacert.pem /usr/local/share/ca-certificates/cacert.crt
 sudo update-ca-certificates
