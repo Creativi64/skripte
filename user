@@ -1,0 +1,23 @@
+### ordner anlegen
+    mkdir [Pfad]
+
+### ordner besitzer zuordnen
+    chown [Username]:[Gruppenname] [Pfad]
+
+### user anlegen
+    sudo useradd [Username]
+
+### gruppe anlegen
+    groupadd [Gruppenname]
+
+### user einer gruppe zuordnen
+    sudo usermod -aG [Gruppenname] [Username]
+
+### gruppenrechte auf ordner vergeben
+    setfacl -m g:[Gruppenname]:rwx [Pfad]
+
+### gruppenrechte auf ordner mit allen unterordner geben
+    setfacl -Rdm g:[Gruppenname]:rwx [Pfad]
+
+### userrechte vergeben
+    setfacl -m u:[Username]:rwx [Pfad]
