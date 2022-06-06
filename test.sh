@@ -1,9 +1,9 @@
 #!/bin/bash
-readarray -t testarray < ips.csv
+mapfile -t testarray <ips.csv
 
-echo "${testarray[*]}"
+printf "%s\n" "${testarray[*]}"
 echo "---"
-echo "${testarray[@]}"
+printf "%s\n" "${testarray[@]}"
 echo "---"
 echo ${#testarray[*]}
 echo "---"
@@ -15,5 +15,5 @@ echo ${#testarray[1]}
 echo "---"
 echo "${!testarray[*]}"
 echo "---"
-echo "${!testarray[1]}"
-echo "---" 
+echo "${!testarray[@]}"
+echo "---"
