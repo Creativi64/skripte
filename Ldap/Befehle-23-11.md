@@ -90,7 +90,7 @@ des wegen ist es vorteil hast user fürs erste zu deaktivieren bis man sie kompl
 
 ## ldif
 
-ldifde "(objectClass=User)" -l "objectSID" -f ".\backup.ldf" -d "CN=[UserNAme],OU=[Unit],DC=[Domain],DC=[TDL]"
+ldifde -r "(objectClass=User)" -l "objectSID" -f ".\backup.ldf" -d "CN=[UserNAme],OU=[Unit],DC=[Domain],DC=[TDL]"
 
 ## User
 
@@ -113,8 +113,12 @@ dapsearch -x -LLL -D "Administrator@kreuzerkeknetwork.de" -W -b "OU=Firma,DC=Kre
 ---
 
 ldapsearch -x -b "DC=Test,DC=local" -H "ldap://192.168.179.71"
+
 ldapsearch -x -LLL -D "Administrator@Test.local" -W -b "DC=Test,DC=local" -H "ldap://192.168.179.71" "(&(sAMAccountType=805306368)(sn=Fritz)(sAMAccountName~=Fritz*))" "*"
-ldapsearch -x -LLL -D "Administrator@Test.local" -W -b "DC=Test,DC=local" -H "ldap://192.168.179.71" "(&(sAMAccountType=805306368))" "\*"
+
+ldapsearch -x -LLL -D "Administrator@Test.local" -W -b "DC=Test,DC=local" -H "ldap://192.168.179.71" "(&(sAMAccountType=805306368))" "*"
+
+ldapsearch -x -LLL -D "Administrator@PHKR.INT" -W -b "OU=Firma,DC=phkr,DC=int" -H "ldap://PHKR.INT" -s sub "(&(sAMAccountType=805306368))" "*"
 
 ## User Export
 
@@ -126,22 +130,152 @@ ldifde -i -f "c:\backup.ldf" -u
 
 ## bei import ändern
 
-dn: CN=Fritz,OU=Firma,DC=kreuzerKekNETWORK,DC=de
-changetype: modify
-replace: sAMAccountName
-sAMAccountName: Fritz12345
+dn: CN=Fritz,OU=Firma,DC=kreuzerKekNETWORK,DC=de\
+changetype: modify\
+replace: sAMAccountName\
+sAMAccountName: [NewName]
 
--
+\-
 
 ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administrator@kreuzerkeknetwork.de -W
 
+ldapmodify -x -c -a -f "backuploadpas.ldif" -H "ldap://10.200.10.1" -D Administrator@PHKR.INT -W
+
 <http://pig.made-it.com/pig-adusers.html>
+
+## Port scanen
+
+nmap -P0 -p 636 phkr.int
 
 ## PAWWORT SETZEN Können
 
+ldapmodify -v -x -c -a -f "backuploadpas.ldif" -H "ldaps://SERVERPHKR.PHKR.INT" -D Administrator@PHKR.INT -W
+
+ldapmodify -v -x -c -a -f "backuploadpas2.ldif" -H "ldaps://SERVERPHKR.PHKR.INT" -D Administrator@PHKR.INT -W
+# User Erstelle mit Unicode PWD
+
+Passwort: "SuperSchueler123"
+
+Passwort erstellen mit
+
+```bash
+ echo -n "\"[Passwort]\"" | iconv -f UTF8 -t UTF16LE | base64 -w 0
+ ```
+
+```bash
+ echo -n "\"SuperSchueler123\"" | iconv -f UTF8 -t UTF16LE | base64 -w 0
+ ```
+## File
+
+```ldif
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: add
+accountExpires: 9223372036854775807
+cn: Test
+codePage: 0
+countryCode: 0
+displayName: Test
+distinguishedName: CN=Test,OU=Firma,DC=PHKR,DC=int
+dSCorePropagationData: 16010101000000.0Z
+givenName: Test
+sAMAccountName: Test
+#userAccountControl: 514
+userPrincipalName: Test@PHKR.int
+uSNChanged: 45341
+uSNCreated: 45336
+whenChanged: 20211116110306.0Z
+whenCreated: 20211116110306.0Z
+userPassword: Hallo123!
+userAccountControl: 544
+
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: unicodePwd
+unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
+
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: userAccountControl
+userAccountControl: 512
+-name: Test
+objectCategory: 
+ CN=Person,CN=Schema,CN=Configuration,DC=PHKR,DC=int
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+sAMAccountName: Test
+#userAccountControl: 514
+userPrincipalName: Test@PHKR.int
+uSNChanged: 45341
+uSNCreated: 45336
+whenChanged: 20211116110306.0Z
+whenCreated: 20211116110306.0Z
+userPassword: Hallo123!
+userAccountControl: 544
+
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: unicodePwd
+unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
+
+dn: CN=Test,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: userAccountControl
+userAccountControl: 512
+-
+
+```
+
+```ldif
+dn: CN=KEK2,OU=Firma,DC=phkr,DC=int
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+cn: KEK2
+givenName: KEK2
+distinguishedName: CN=KEK2,OU=Firma,DC=phkr,DC=int
+instanceType: 4
+whenCreated: 20220215121859.0Z
+whenChanged: 20220215121859.0Z
+displayName: KEK2
+name: KEK2
+userAccountControl: 514
+countryCode: 0
+sAMAccountName: KEK2
+userPrincipalName: KEK2@phkr.int
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=phkr,DC=int
+
+dn: CN=KEK2,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: unicodePwd
+unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
+
+dn: CN=KEK2,OU=Firma,DC=PHKR,DC=int
+changetype: modify
+replace: userAccountControl
+userAccountControl: 66048
+-
+
+
+```
+
+## Befehl
+
+ldapmodify -c -a -f "backuploadpas.ldif" -H "ldaps://SERVERPHKR.PHKR.INT:636" -D Administrator@PHKR.INT -W
+
+## LInks
+
 <http://woshub.com/password-policy-active-directory/>
 
+<http://pig.made-it.com/pig-adusers.html>
 # Kreberos Ticket Bekommen
+
+apt-get install krb5-user
+
+<http://www.itadmintools.com/2011/07/creating-kerberos-keytab-files.html>
 
 ## Kerberos Datei Linix
 
@@ -263,6 +397,24 @@ dns_lookup_kdc = true
 
 ```
 
+# Zertifikate Installieren von Win Server auf Linux
+
+Auf Win server zertifkat erstellen
+
+cp zert.crt /usr/share/ca-certificates/
+
+sudo dpkg-reconfigure ca-certificates
+
+
+<https://techexpert.tips/de/windows-de/aktivieren-des-active-directory-ldap-over-ssl-features/>
+
+<https://geekdudes.wordpress.com/2020/02/18/linux-connecting-to-windows-ldap-over-ssl-ldaps-using-certificate/>
+
+<https://stackoverflow.com/questions/642284/do-i-need-to-convert-cer-to-crt-for-apache-ssl-certificates-if-so-how>
+
+<https://blog.wydler.eu/2014/08/02/ca-zertifikat-unter-debian-importieren/>
+
+
 ## Kreberos Ticket Anfordern
 
 kini [DomainUser(Admin)]
@@ -275,15 +427,311 @@ klist
 
 # Keytab File
 
->#ktutil
-ktutil: addent -password -p Administrator@PHKR.INT -k 5 -f
-ktutil: wkt ph.keytab
+>#ktutil\
+>ktutil: addent -password -p Administrator@PHKR.INT -k 5 -f\
+>ktutil: wkt ph.keytab
 
 ## Tiket Holen
 
 kinit Administrator@PHKR.INT -k -t tab2.keytab
 
+kinit Administrator@PHKR.INT -k -t ph.keytab
 
+# Webserver aufsetzen
+
+## instalation
+https://github.com/angristan/nginx-autoinstall
+
+## fixes
+
+apt install libuuid1=2.36.1-8+deb11u1
+
+apt install libxml2=2.9.10+dfsg-6.7
+
+apt install libssl1.1=1.1.1k-1+deb11u1
+ 
+ ## config file
+
+ /etc/nginx/nginx.conf
+ ```
+ user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 2048;
+    use epoll;
+    multi_accept on;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    aio threads;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    server_tokens off;
+
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_proxied any;
+    gzip_types *;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*.conf;
+
+	server {
+		listen         80 default_server;
+		listen         [::]:80 default_server;
+		server_name    localhost;
+		root           [BasePath];
+		index          index.html;
+		try_files $uri /index.html;
+	}
+}
+
+
+ ```
+## Konfig datei mit php
+ /etc/nginx/nginx.conf
+ ```
+ user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 2048;
+    use epoll;
+    multi_accept on;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    aio threads;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    server_tokens off;
+
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_proxied any;
+    gzip_types *;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*.conf;
+
+	server {
+		listen         80 default_server;
+		listen         [::]:80 default_server;
+		server_name    localhost;
+		root           /home/philipp/skripte/serverPHP;
+		index          index.php index.html;
+		#try_files $uri /index.html;
+
+		location / {
+			try_files $uri $uri/ =404;
+		}
+		location ~ \.php$ {
+			include fastcgi_params;
+			fastcgi_intercept_errors on;
+			#fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+			fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+			fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+		}
+
+		location ~ /\.ht {
+			deny all;
+		}
+	}
+}
+
+ ```
+
+ https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04 
+
+ https://stackoverflow.com/questions/43262435/nginxs-fastcgi-php-conf-snippet-is-missing
+# systemd befehle
+
+systemctl status  nginx
+
+systemctl restart  nginx
+
+# cert selbst erstellen
+
+> /etc/hosts
+`10.200.10.2 linux11.phkr.int`
+
+> Länder Kürzel
+`DE`
+
+muss mit der domain addresse im server und cert identisch sein
+
+## SSL zertifikate anlegen
+
+> `mkdir [WAHTEVERPLACE] && cd [WAHTEVERPLACE]`
+ 
+`mkdir /root/ca3 && cd /root/ca3`
+
+> `openssl req -new -x509 -newkey rsa:2048 -keyout [NAMECA].pem -out [NAMECA].pem -days 3650`
+
+`openssl req -new -x509 -newkey rsa:2048 -keyout cakey.pem -out cacert.pem -days 3650`
+
+Passwort vergeben
+
+Länder Kürzel angben => "DE"
+
+eventuell Andere Daten
+
+"Common Name" -> "Domain Name" , bcwn
+
+>`chmod 600 [NAMECA].pem`
+
+`chmod 600 cakey.pem`
+###  CA cert erfolgreich erstellt
+
+>`openssl genrsa -out [SERVERKEY].pem -aes128 2048 `
+
+`openssl genrsa -out serverkey.pem -aes128 2048` 
+
+dump passwort vergeben wird glieich wieder entfetnt
+
+>`openssl rsa -in [SERVERKEY].pem -out [SERVERKEY].pem`
+
+`openssl rsa -in serverkey.pem -out serverkey.pem`
+
+passwort eingeben
+
+## Server cert erstellt
+
+>`openssl req -new -key [SERVERKEY].pem -out req.pem -nodes`
+
+`openssl req -new -key serverkey.pem -out req.pem -nodes`
+
+GENAU gleiche Daten eintragen wie Beim erstellen des CA certs
+
+Common name MUSS DOMAIN NAME sein 
+
+challenge passwort leer lassen
+
+## OPEN ssl config anpassen
+
+in '/etc/ssl/openssl.cnf'
+
+> [CA_default]
+
+```dir             = .              # Where everything is kept 
+new_certs_dir   = $dir           # default place for new certs 
+private_key     = $dir/cakey.pem # The private key 
+RANDFILE        = $dir/.rand     # private random number file 
+default_days    = 3650           # how long to certify for 
+```
+
+> [policy_match]
+```
+stateOrProvinceName     = optional
+```
+
+zu sätzliche nötige datei erzeugen
+
+```echo 01 > serial```
+
+```touch index.txt```
+
+## eigenser zertifikat signieren
+
+```openssl ca -in req.pem -notext -out servercert.pem```
+ 
+ passwort eigeben
+
+ und zweimal y
+
+## Certs kopieren
+
+cp servercert.pem /usr/local/share/ca-certificates/servercert.crt
+cp serverkey.pem /etc/ssl/serverkey.pem
+ 
+## trusten
+
+cp cacert.pem /usr/local/share/ca-certificates/cacert.crt
+sudo update-ca-certificates
+
+# Nginx conf mit cert
+
+``` 
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 2048;
+    use epoll;
+    multi_accept on;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    aio threads;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    server_tokens off;
+
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_proxied any;
+    gzip_types *;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*.conf;
+	server{
+		listen 80;
+		server_name linux.phkr.int;
+		return 301 https://localhost$request_uri;
+	}
+
+	server {	 
+		listen		443 ssl http2; 
+		ssl_certificate /usr/local/share/ca-certificates/servercert.crt;
+		ssl_certificate_key /etc/ssl/serverkey.pem;
+		server_name    linux11.phkr.int;
+		root           /home/philipp/skripte/serverPHP;
+		index          index.php index.html; 
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+		location ~ \.php$ {
+        		 include fastcgi_params;
+			fastcgi_intercept_errors on;
+        		fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+			fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+    		}
+
+    		location ~ /\.ht {
+        		deny all;
+    		}
+	}
+}
+```
 # Links
 
 <http://www.itadmintools.com/2011/07/creating-kerberos-keytab-files.html>
@@ -297,5 +745,7 @@ kinit Administrator@PHKR.INT -k -t tab2.keytab
 <https://sid-500.com/2017/03/31/active-directory-zertifikatsdienste-teil-2-installation-der-zertifizierungsstellen-webregistrierung/>
 <https://social.technet.microsoft.com/wiki/contents/articles/2980.ldap-over-ssl-ldaps-certificate.aspx>
 <https://techexpert.tips/de/windows-de/aktivieren-des-active-directory-ldap-over-ssl-features/>
+
+<https://geekdudes.wordpress.com/2020/02/18/linux-connecting-to-windows-ldap-over-ssl-ldaps-using-certificate/>
 
 <https://wiki.ubuntuusers.de/GRUB_2/Konfiguration/>

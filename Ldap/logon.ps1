@@ -1,5 +1,6 @@
 #dsquery group -name "[Name]"
 
+
 #dsget (dsquery user -name "Müller")
 $Gruppe = dsquery group -name "L_Einkauf";
 $Mitgliedschaften  = dsget user (dsquery user -name $env:USERNAME) -memberof -expand;

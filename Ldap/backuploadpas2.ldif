@@ -1,0 +1,35 @@
+
+dn: CN=Piet,OU=Firma,DC=PHKR,DC=int
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+objectCategory: CN=Piet,OU=Firma,DC=PHKR,DC=int
+codePage: 0
+countryCode: 0
+distinguishedName: CN=Piet,OU=Firma,DC=PHKR,DC=int
+cn: Piet
+givenName: Piet
+displayName: Piet
+name: Piet
+telephoneNumber: 123456
+userAccountControl: 512
+accountExpires: 0
+sAMAccountName: pps
+userPrincipalName: Test
+whenCreated: 20220215121859.0Z
+whenChanged: 20220215121859.0Z
+#-
+#
+#dn: CN=Piet,OU=Firma,DC=PHKR,DC=int
+#changetype: modify
+#replace: unicodePwd
+#unicodePwd::IgBTAHUAcABlAHIAUwBjAGgAdQBlAGwAZQByADEAMgAzACIA
+#
+#dn: CN=Piet,OU=Firma,DC=PHKR,DC=int
+#changetype: modify
+#replace: userAccountControl
+#userAccountControl: 512
+#-
+#
