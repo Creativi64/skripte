@@ -17,3 +17,5 @@ echo "${!testarray[*]}"
 echo "---"
 echo "${!testarray[@]}"
 echo "---"
+
+#hiujhjihjilhjk
