@@ -120,7 +120,7 @@ Objekte, die von Mitgliedern von Gruppenrichtlinie Creator Owners erstellt werde
 `S-1-5-domain-553**`  `RAS- und IAS-Server`  Eine lokale Domänengruppe. Standardmäßig hat diese Gruppe keine Mitglieder. Computer, auf denen der Routing- und Remotezugriffsdienst ausgeführt wird, werden der Gruppe automatisch hinzugefügt.
 Mitglieder dieser Gruppe haben Zugriff auf bestimmte Eigenschaften von Benutzerobjekten, z. B. Kontobeschränkungen lesen, Anmeldeinformationen lesen und Remotezugriffsinformationen lesen.
 
-`S-1-5-32-544`  `Administratoren`  Eine integrierte Gruppe. Nach der Erstinstallation des Betriebssystems ist das einzige Mitglied der Gruppe das Administratorkonto. Wenn ein Computer einer Domäne beitritt, wird die Gruppe "Domänenadministratoren" zur Gruppe "Administratoren" hinzugefügt. Wenn ein Server zu einem Domänencontroller wird, wird die Gruppe Enterprise Administratoren auch der Gruppe "Administratoren" hinzugefügt.
+->>> `S-1-5-32-544`  `Administratoren`  Eine integrierte Gruppe. Nach der Erstinstallation des Betriebssystems ist das einzige Mitglied der Gruppe das Administratorkonto. Wenn ein Computer einer Domäne beitritt, wird die Gruppe "Domänenadministratoren" zur Gruppe "Administratoren" hinzugefügt. Wenn ein Server zu einem Domänencontroller wird, wird die Gruppe Enterprise Administratoren auch der Gruppe "Administratoren" hinzugefügt.
 
 `S-1-5-32-545`  `Users`  Eine integrierte Gruppe. Nach der Erstinstallation des Betriebssystems ist das einzige Mitglied die Gruppe Authentifizierte Benutzer.
 
