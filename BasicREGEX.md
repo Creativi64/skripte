@@ -10,15 +10,15 @@ kann einfach üver die VScode Suche gesetet werden das erste von rechts erlaubt 
 
 <https://www.debuggex.com/> Visiualizer
 
-`[]` Character Set z.b. `[0-9]`
+`[]` Character Set z.b. alle zahlen von 0 bis 9 `[0-9]` negiert `[^0-9]`
 
-`{}` Anzahl der erlaubten des vorhergegangenen z.b `[0]{1}` es muss genau eine null sein, `[0-9]{1,2}` es können ein bis zweimal die Zahenlen 0bis9 vorkommen `[0-9][1,]` min 1 mal
+`{}` Anzahl der erlaubten des vorhergegangenen z.b `[0]{1}` es muss genau eine null sein, `[0-9]{1,2}` es können ein bis zweimal die Zahlen 0 bis 9 vorkommen `[0-9][1,]` min 1 mal
 
 `*` Mehr
 
 `+` einer oder mehr
 
-`?` Einer oder keiner
+`?` Einer oder keine
 
 `.` Jeder Charakter
 
