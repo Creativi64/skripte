@@ -1,4 +1,53 @@
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [Helge Klein Examplels](#helge-klein-examplels)
+  - [SIDS](#sids)
+  - [Syntax](#syntax)
+  - [ObjectTypes](#objecttypes)
+  - [Aktionen](#aktionen)
+    - [Acces Control Entrys](#acces-control-entrys)
+      - [Permissions](#permissions)
+      - [Inheritance](#inheritance)
+      - [Mode](#mode)
+      - [Where](#where)
+    - [Trustee](#trustee)
+      - [TrusteeAction](#trusteeaction)
+      - [What](#what)
+    - [Domain](#domain)
+      - [Domain action](#domain-action)
+    - [Set Owner](#set-owner)
+    - [Set Primary Group](#set-primary-group)
+    - [Set Protection Flags](#set-protection-flags)
+    - [Reset Children](#reset-children)
+    - [Clear](#clear)
+    - [List](#list)
+    - [Restore](#restore)
+    - [Delete Orphaned SIDs](#delete-orphaned-sids)
+  - [Example 1.1 – Setting Permissions](#example-11--setting-permissions)
+    - [Example 1.2 – Setting Multiple Permissions](#example-12--setting-multiple-permissions)
+    - [Example 1.3 – Adding Multiple ACEs](#example-13--adding-multiple-aces)
+    - [Example 1.4 – Specifying SIDs](#example-14--specifying-sids)
+    - [Example 1.5 – Remote Systems](#example-15--remote-systems)
+    - [Example 1.6 – Auditing Entries (SACL)](#example-16--auditing-entries-sacl)
+    - [Example 1.7 – Cleaning up ACLs](#example-17--cleaning-up-acls)
+    - [Example 1.8 – Resetting Child Objects](#example-18--resetting-child-objects)
+    - [Example 1.9 – Using the Log File](#example-19--using-the-log-file)
+    - [Example 1.10 – Silent Mode](#example-110--silent-mode)
+    - [Example 1.11 – Filtering and Excluding Objects](#example-111--filtering-and-excluding-objects)
+    - [Example 1.12 – Setting the Owner](#example-112--setting-the-owner)
+  - [Example 2 – Listing and Backup](#example-2--listing-and-backup)
+  - [Example 3 – Restore](#example-3--restore)
+  - [Example 4 – Copying Permissions Between Users](#example-4--copying-permissions-between-users)
+  - [Example 5 – Migrating Permissions Between Domains](#example-5--migrating-permissions-between-domains)
+  - [Example 6 – Removing all Permissions of a User](#example-6--removing-all-permissions-of-a-user)
+
+<!-- /code_chunk_output -->
+
 # Helge Klein Examplels
+
 
 ## SIDS
 
@@ -207,6 +256,8 @@ Mitglieder dieser Gruppe haben Zugriff auf bestimmte Eigenschaften von Benutzero
 `DOMAIN_ALIAS_RID_BACKUP_OPS` `551`  Eine lokale Gruppe, die zum Steuern der Zuweisung von Dateisicherungs- und Wiederherstellungsbenutzerrechten verwendet wird.
 `DOMAIN_ALIAS_RID_REPLICATOR` `552`  Eine lokale Gruppe, die für das Kopieren von Sicherheitsdatenbanken vom primären Domänencontroller auf die Sicherungsdomänencontroller verantwortlich ist. Diese Konten werden nur vom System verwendet.
 `DOMAIN_ALIAS_RID_RAS_SERVERS` `553`  Eine lokale Gruppe, die den Remotezugriff und Server darstellt, auf denen der Internetauthentifizierungsdienst (Internet Authentication Service, IAS) ausgeführt wird. Diese Gruppe ermöglicht den Zugriff auf verschiedene Attribute von Benutzerobjekten.
+
+
 
 ## Syntax
 
