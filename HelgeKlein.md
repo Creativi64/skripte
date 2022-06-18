@@ -257,8 +257,6 @@ Mitglieder dieser Gruppe haben Zugriff auf bestimmte Eigenschaften von Benutzero
 `DOMAIN_ALIAS_RID_REPLICATOR` `552`  Eine lokale Gruppe, die für das Kopieren von Sicherheitsdatenbanken vom primären Domänencontroller auf die Sicherungsdomänencontroller verantwortlich ist. Diese Konten werden nur vom System verwendet.
 `DOMAIN_ALIAS_RID_RAS_SERVERS` `553`  Eine lokale Gruppe, die den Remotezugriff und Server darstellt, auf denen der Internetauthentifizierungsdienst (Internet Authentication Service, IAS) ausgeführt wird. Diese Gruppe ermöglicht den Zugriff auf verschiedene Attribute von Benutzerobjekten.
 
-
-
 ## Syntax
 
 `SetACL.exe`
