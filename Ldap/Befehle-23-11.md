@@ -1,3 +1,10 @@
+
+IANA hat Obejkt ID festgelegt
+
+internet assingen numbers authority
+
+
+
 # Winexe
 
 # Befehl Ausfüren
